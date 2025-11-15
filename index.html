@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NightCap Vapor – Premium Vape Vending for Bars</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --nc-deep-green: #212C1E;
+            --nc-deep-gold: #4B492B;
+            --nc-gold: #E5D9A5;
+            --nc-soft-gold: #F0E4B8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #283524 0, var(--nc-deep-green) 55%, #161b13 100%);
+            color: var(--nc-soft-gold);
+        }
+
+        /* Art Deco frame utility */
+        .deco-frame {
+            position: relative;
+            border: 1px solid rgba(229, 217, 165, 0.22);
+            padding: 1.75rem;
+        }
+
+        .deco-frame::before,
+        .deco-frame::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(229, 217, 165, 0.55);
+            width: 32px;
+            height: 32px;
+        }
+
+        .deco-frame::before {
+            top: -6px;
+            left: -6px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .deco-frame::after {
+            bottom: -6px;
+            right: -6px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(18px);
+            background: linear-gradient(90deg, rgba(11,14,9,0.9), rgba(40,53,36,0.9));
+            border-bottom: 1px solid rgba(229,217,165,0.26);
+        }
+
+        .nav {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 2px solid var(--nc-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-mark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 210deg, rgba(229,217,165,0.03), rgba(229,217,165,0.45), rgba(229,217,165,0.03));
+            opacity: 0.7;
+        }
+
+        .logo-mark span {
+            position: relative;
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .logo-text-sub {
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(229,217,165,0.7);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: rgba(229,217,165,0.8);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: var(--nc-gold);
+            transition: width 180ms ease-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 0.55rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid rgba(229,217,165,0.6);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            background: radial-gradient(circle at top, rgba(229,217,165,0.16), rgba(229,217,165,0.02));
+            color: var(--nc-soft-gold);
+            text-decoration: none;
+            transition: transform 140ms ease-out, box-shadow 140ms ease-out, background 180ms ease-out;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: radial-gradient(circle at top, rgba(229,217,165,0.32), rgba(229,217,165,0.06));
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 4.5rem 1.5rem 4rem;
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.7fr);
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 820px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 3.1rem;
+            }
+        }
+
+        .hero-copy h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.4rem, 3.1vw, 3.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-copy p {
+            font-size: 1.02rem;
+            max-width: 34rem;
+            color: rgba(240,228,184,0.86);
+        }
+
+        .hero-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(229,217,165,0.42);
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .hero-highlight span {
+            height: 6px;
+            width: 6px;
+            border-radius: 999px;
+            background: var(--nc-gold);
+        }
+
+        .hero-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .metric {
+            min-width: 130px;
+        }
+
+        .metric strong {
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+        }
+
+        .metric span {
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(229,217,165,0.7);
+        }
+
+        .hero-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-primary {
+            padding: 0.9rem 1.9rem;
+            border-radius: 999px;
+            border: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--nc-gold), #f6e9bf);
+            color: #201b0e;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 14px 35px rgba(0,0,0,0.65);
+            transition: transform 140ms ease-out, box-shadow 140ms ease-out;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px) scale(1.01);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+        }
+
+        .btn-secondary-text {
+            font-size: 0.86rem;
+            color: rgba(229,217,165,0.75);
+        }
+
+        .btn-secondary-text span {
+            text-decoration: underline;
+        }
+
+        /* Hero machine mock */
+        .hero-machine {
+            justify-self: center;
+        }
+
+        .machine-shell {
+            width: 260px;
+            height: 520px;
+            border-radius: 22px;
+            background: radial-gradient(circle at top, rgba(229,217,165,0.12), rgba(0,0,0,0.9));
+            border: 1px solid rgba(229,217,165,0.28);
+            box-shadow: 0 26px 70px rgba(0,0,0,0.85);
+            padding: 18px 18px 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .machine-shell::before {
+            content: "";
+            position: absolute;
+            inset: -40px;
+            background: conic-gradient(from 200deg, rgba(229,217,165,0.12), transparent 26%, rgba(229,217,165,0.2), transparent 60%);
+            opacity: 0.45;
+            mix-blend-mode: soft-light;
+        }
+
+        .machine-inner {
+            position: relative;
+            height: 100%;
+            border-radius: 18px;
+            background: var(--nc-deep-green);
+            display: flex;
+            flex-direction: column;
+            padding: 16px 14px 14px;
+            gap: 12px;
+        }
+
+        .machine-screen {
+            flex: 1;
+            border-radius: 10px;
+            background: radial-gradient(circle at top, rgba(255,255,255,0.16), rgba(9,8,6,0.9));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.75);
+            font-size: 0.74rem;
+            text-align: center;
+            padding: 0.85rem;
+        }
+
+        .machine-buttons {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 8px;
+        }
+
+        .btn-push,
+        .btn-reader {
+            border-radius: 7px;
+            background: #11120f;
+            border: 1px solid rgba(229,217,165,0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: var(--nc-gold);
+        }
+
+        .machine-brand {
+            border-radius: 8px;
+            background: #050605;
+            border: 1px solid rgba(229,217,165,0.28);
+            padding: 0.55rem;
+            text-align: center;
+            font-size: 0.72rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(229,217,165,0.9);
+        }
+
+        /* SECTIONS */
+        main section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 3.75rem;
+        }
+
+        section h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        section .section-kicker {
+            font-size: 0.78rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: rgba(229,217,165,0.7);
+        }
+
+        section p {
+            font-size: 0.98rem;
+            line-height: 1.7;
+            max-width: 44rem;
+        }
+
+        /* Value props */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2.4rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(75,73,43,0.92), rgba(26,24,17,0.98));
+            border-radius: 16px;
+            padding: 1.75rem 1.6rem 1.7rem;
+            border: 1px solid rgba(229,217,165,0.22);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.75);
+            transform: translateY(0);
+            transition: transform 140ms ease-out, box-shadow 140ms ease-out, border-color 160ms ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 52px rgba(0,0,0,0.82);
+            border-color: rgba(229,217,165,0.6);
+        }
+
+        .card h3 {
+            margin: 0 0 0.7rem;
+            font-family: 'Cinzel', serif;
+            font-size: 1.18rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: rgba(249,240,203,0.9);
+        }
+
+        /* How it works timeline */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+            gap: 2.4rem;
+            margin-top: 2.4rem;
+        }
+
+        @media (max-width: 820px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .steps-list {
+            border-left: 1px solid rgba(229,217,165,0.35);
+            padding-left: 1.8rem;
+        }
+
+        .step {
+            margin-bottom: 1.6rem;
+            position: relative;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -2.5rem;
+            top: 0.1rem;
+            width: 1.4rem;
+            height: 1.4rem;
+            border-radius: 999px;
+            background: var(--nc-gold);
+            color: #1b160b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.78rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.12rem;
+        }
+
+        .step-text {
+            font-size: 0.94rem;
+            color: rgba(229,217,165,0.88);
+        }
+
+        .steps-highlight {
+            font-size: 0.94rem;
+            background: rgba(75,73,43,0.8);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid rgba(229,217,165,0.4);
+            box-shadow: 0 14px 34px rgba(0,0,0,0.78);
+        }
+
+        /* FAQ */
+        .faq {
+            margin-top: 2.6rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(229,217,165,0.22);
+        }
+
+        .faq-question {
+            padding: 0.9rem 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-question span {
+            font-size: 0.96rem;
+            font-weight: 500;
+        }
+
+        .faq-toggle {
+            font-size: 1.3rem;
+            color: rgba(229,217,165,0.7);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 240ms ease-out;
+            font-size: 0.92rem;
+            color: rgba(232,222,190,0.9);
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 260px;
+        }
+
+        .faq-answer-inner {
+            padding-bottom: 0.85rem;
+        }
+
+        /* CTA */
+        .cta {
+            max-width: 1120px;
+            margin: 0 auto 3.5rem;
+            padding: 3.4rem 1.5rem 3.6rem;
+        }
+
+        .cta-inner {
+            background: radial-gradient(circle at top, rgba(229,217,165,0.16), rgba(11,10,6,0.98));
+            border-radius: 22px;
+            padding: 2.6rem 2.2rem 2.8rem;
+            border: 1px solid rgba(229,217,165,0.46);
+            box-shadow: 0 22px 60px rgba(0,0,0,0.9);
+            text-align: center;
+        }
+
+        .cta-inner h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .cta-inner p {
+            margin: 0 auto 1.9rem;
+            max-width: 32rem;
+        }
+
+        .cta-note {
+            margin-top: 1.2rem;
+            font-size: 0.86rem;
+            color: rgba(229,217,165,0.7);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.2rem 1.5rem 2.6rem;
+            font-size: 0.8rem;
+            color: rgba(229,217,165,0.65);
+            border-top: 1px solid rgba(229,217,165,0.24);
+        }
+
+        /* Simple scroll animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 420ms ease-out, transform 420ms ease-out;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav">
+            <div class="logo-lockup">
+                <div class="logo-mark"><span>N</span></div>
+                <div class="logo-text">
+                    <div class="logo-text-title">NightCap Vapor</div>
+                    <div class="logo-text-sub">Art Deco Vape Vending</div>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#value">Benefits</a>
+                <a href="#how">How It Works</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <a href="#cta" class="nav-cta">Book a Call</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-copy reveal">
+                <div class="hero-highlight"><span></span> High-margin revenue in a 3×3 ft footprint</div>
+                <h1>Turn a spare corner into your most profitable regular.</h1>
+                <p>
+                    NightCap Vapor installs a fully compliant, premium vape vending machine in just
+                    <strong>3×3 feet</strong> of floor space. You provide the corner &ndash; we provide the
+                    hardware, inventory, permits and service. Your bar collects a monthly profit share with
+                    <strong>zero staff time</strong> and no up-front investment.
+                </p>
+                <div class="hero-cta-row">
+                    <a href="#cta" class="btn-primary">Request a Placement <span>&rarr;</span></a>
+                    <div class="btn-secondary-text">Or <span>see how the partnership works</span> below.</div>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric">
+                        <strong>3&times;3 ft</strong>
+                        <span>Space required</span>
+                    </div>
+                    <div class="metric">
+                        <strong>100% Hands-off</strong>
+                        <span>We run everything</span>
+                    </div>
+                    <div class="metric">
+                        <strong>New Profit</strong>
+                        <span>High-margin add-on</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-machine reveal">
+                <div class="machine-shell deco-frame">
+                    <div class="machine-inner">
+                        <div class="machine-screen">
+                            Curated, Texas-legal nicotine and vape products, displayed on a modern touchscreen &ndash;
+                            designed to feel at home in upscale cocktail bars and neighborhood pubs alike.
+                        </div>
+                        <div class="machine-buttons">
+                            <div class="btn-push">Dispense</div>
+                            <div class="btn-reader">Tap / Swipe</div>
+                        </div>
+                        <div class="machine-brand">NightCap Vapor</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="value" class="reveal">
+            <div class="section-kicker">Why bar owners say yes</div>
+            <h2>Big returns, tiny footprint.</h2>
+            <p>
+                Most bars have a dead corner: next to the jukebox, beside the ATM, near the restrooms. NightCap Vapor
+                turns that forgotten space into a <strong>high-margin, age-gated retail experience</strong> that your
+                staff never has to think about.
+            </p>
+
+            <div class="cards">
+                <article class="card">
+                    <h3>Zero staff involvement</h3>
+                    <p>
+                        No one behind the bar has to card, stock, or ring up sales. Our machine verifies age and handles
+                        every transaction. Your team stays focused on what they do best: pouring drinks and creating a
+                        great night.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Highest profit per sq ft</h3>
+                    <p>
+                        A single 3×3 ft footprint can generate meaningful monthly profit. Because we stock only proven
+                        products with strong demand in nightlife settings, you gain <strong>incremental revenue</strong>
+                        without cannibalizing bar sales.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>No capex, no hassle</h3>
+                    <p>
+                        You don&rsquo;t buy the machine, inventory, or software. We provide everything, keep it filled,
+                        monitor performance remotely, and schedule service before there&rsquo;s ever a problem.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Designed for your atmosphere</h3>
+                    <p>
+                        Our Art Deco inspired aesthetic &ndash; deep green, soft gold, and clean lines &ndash; was
+                        created specifically to blend with sophisticated cocktail bars and warmly lit, rustic spaces.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section id="how" class="reveal">
+            <div class="section-kicker">Partnership in three steps</div>
+            <h2>We install it. You cash the checks.</h2>
+
+            <div class="steps-grid">
+                <div>
+                    <div class="steps-list">
+                        <div class="step" data-step="1">
+                            <div class="step-title">Walkthrough & placement choice</div>
+                            <div class="step-text">
+                                We tour your space with you (virtually or in person), identify a discreet 3×3 ft area,
+                                and confirm power access and traffic flow.
+                            </div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-title">Install & configuration</div>
+                            <div class="step-text">
+                                Our team delivers and installs the machine, sets up payment processing, uploads your
+                                venue branding if desired, and confirms everything meets Texas regulations.
+                            </div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-title">Stock, monitor, pay out</div>
+                            <div class="step-text">
+                                We stock the machine with curated, compliant products, monitor sales in real time, and
+                                send you a transparent monthly statement along with your profit share.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="steps-highlight deco-frame">
+                        <strong>What you provide:</strong>
+                        <ul>
+                            <li>Three feet by three feet of floor space</li>
+                            <li>Standard power outlet</li>
+                            <li>A 21+ environment and existing bar traffic</li>
+                        </ul>
+                        <strong>What we provide:</strong>
+                        <ul>
+                            <li>Vape vending machine, inventory, &amp; software</li>
+                            <li>Compliance, age gating, and payment processing</li>
+                            <li>Ongoing service, restocking, and performance optimization</li>
+                        </ul>
+                        Your result: a new, hands-off revenue stream that feels like it&rsquo;s always been part of the bar.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="reveal">
+            <div class="section-kicker">Questions from bar owners</div>
+            <h2>Is this actually worth the space?</h2>
+            <p>
+                If your bar hosts a regular crowd that already vapes or steps outside between rounds, NightCap Vapor is
+                designed for you. Here are the questions we hear most often.
+            </p>
+
+            <div class="faq">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How much space do you really need?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Our standard machine requires a 3×3 ft footprint &ndash; about the size of a small high-top
+                            table. We&rsquo;ll help you tuck it into a corner, near an entry, or by the restrooms so it
+                            earns without getting in the way.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What kind of money are we talking about?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Exact numbers depend on your traffic and local demand, but the goal is simple: generate
+                            <strong>meaningful incremental profit</strong> from space that isn&rsquo;t earning today.
+                            Because we handle inventory, processing, and shrink, your portion is truly passive
+                            income.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Who&rsquo;s responsible for compliance and permits?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            NightCap Vapor manages all machine-related compliance and required retailer permits
+                            connected to our operations. We design the program to integrate cleanly with your existing
+                            obligations as a 21+ venue.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Does this create more work for my staff?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            No. Your team doesn&rsquo;t process sales, stock product, or troubleshoot the machine. If
+                            something ever needs attention, we handle it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="cta reveal">
+            <div class="cta-inner deco-frame">
+                <div class="section-kicker">Let&rsquo;s walk your floor plan</div>
+                <h2>Show us your dead space. We&rsquo;ll turn it on.</h2>
+                <p>
+                    Send us a quick photo or sketch of your bar layout, and we&rsquo;ll identify ideal placement options
+                    and projected earnings. No obligation, no hard sell &ndash; just a straightforward assessment of
+                    whether NightCap Vapor makes sense for your venue.
+                </p>
+                <a class="btn-primary" href="mailto:partnerships@nightcapvapor.com?subject=NightCap%20Vapor%20Placement%20Inquiry">Email floor plan &nbsp;&rarr;</a>
+                <div class="cta-note">Prefer to talk it through? Include your number and best time to call in the email.</div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        NightCap Vapor &copy; 2025 &mdash; Premium Vape Vending for Texas Bars &amp; Nightlife Venues
+    </footer>
+
+    <script>
+        // Simple scroll reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        const onScroll = () => {
+            const trigger = window.innerHeight * 0.86;
+            revealEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < trigger) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        document.addEventListener('scroll', onScroll);
+        window.addEventListener('load', onScroll);
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                const open = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!open) item.classList.add('open');
+            });
+        });
+    </script>
+</body>
+</html>
