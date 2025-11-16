@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NightCap Vapor – Premium Vape Vending for Bars</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --nc-deep-green: #212C1E;
+            --nc-deep-gold: #4B492B;
+            --nc-gold: #E5D9A5;
+            --nc-soft-gold: #F0E4B8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at top, #283524 0, var(--nc-deep-green) 55%, #161b13 100%);
+            color: var(--nc-soft-gold);
+        }
+
+        /* Prevent blank page by making everything visible */
+        .reveal {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* FRAME */
+        .deco-frame {
+            position: relative;
+            border: 1px solid rgba(229, 217, 165, 0.22);
+            padding: 1.75rem;
+        }
+
+        .deco-frame::before,
+        .deco-frame::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(229,217,165,0.55);
+            width: 32px;
+            height: 32px;
+        }
+
+        .deco-frame::before {
+            top: -6px;
+            left: -6px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .deco-frame::after {
+            bottom: -6px;
+            right: -6px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* HEADER */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            backdrop-filter: blur(18px);
+            background: linear-gradient(90deg, rgba(11,14,9,0.9), rgba(40,53,36,0.9));
+            border-bottom: 1px solid rgba(229,217,165,0.26);
+        }
+
+        .nav {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 2px solid var(--nc-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-mark::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 210deg, rgba(229,217,165,0.03), rgba(229,217,165,0.45), rgba(229,217,165,0.03));
+            opacity: 0.7;
+        }
+
+        .logo-mark span {
+            position: relative;
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.1em;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
+        .logo-text-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.35rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .logo-text-sub {
+            font-size: 0.72rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(229,217,165,0.7);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .nav-links a {
+            color: rgba(229,217,165,0.8);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: var(--nc-gold);
+            transition: width 180ms ease-out;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            padding: 0.55rem 1.2rem;
+            border-radius: 999px;
+            border: 1px solid rgba(229,217,165,0.6);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            background: radial-gradient(circle at top, rgba(229,217,165,0.16), rgba(229,217,165,0.02));
+            color: var(--nc-soft-gold);
+            text-decoration: none;
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 4.5rem 1.5rem 4rem;
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.7fr);
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (max-width: 820px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-copy h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.4rem, 3.1vw, 3.1rem);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero-copy p {
+            font-size: 1.02rem;
+            max-width: 34rem;
+            color: rgba(240,228,184,0.86);
+        }
+
+        .hero-highlight {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(229,217,165,0.42);
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .hero-highlight span {
+            height: 6px;
+            width: 6px;
+            border-radius: 999px;
+            background: var(--nc-gold);
+        }
+
+        .hero-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .metric strong {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+        }
+
+        /* MACHINE MOCKUP */
+        .machine-shell {
+            width: 260px;
+            height: 520px;
+            border-radius: 22px;
+            background: radial-gradient(circle at top, rgba(229,217,165,0.12), rgba(0,0,0,0.9));
+            border: 1px solid rgba(229,217,165,0.28);
+            padding: 18px 18px 22px;
+        }
+        .machine-inner {
+            height: 100%;
+            border-radius: 18px;
+            background: var(--nc-deep-green);
+            padding: 16px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .machine-screen {
+            flex: 1;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.85rem;
+            font-size: 0.75rem;
+            text-align: center;
+        }
+
+        .btn-push,
+        .btn-reader {
+            border-radius: 7px;
+            background: #11120f;
+            border: 1px solid rgba(229,217,165,0.45);
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.16em;
+            color: var(--nc-gold);
+            text-align: center;
+        }
+
+        /* SECTIONS */
+        section {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2.4rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(75,73,43,0.92), rgba(26,24,17,0.98));
+            border-radius: 16px;
+            padding: 1.75rem;
+            border: 1px solid rgba(229,217,165,0.22);
+        }
+
+        /* FAQ */
+        .faq-item {
+            border-bottom: 1px solid rgba(229,217,165,0.22);
+        }
+
+        .faq-question {
+            padding: 0.9rem 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 240ms ease-out;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 260px;
+        }
+
+        /* CTA */
+        .cta-inner {
+            background: radial-gradient(circle at top, rgba(229,217,165,0.16), rgba(11,10,6,0.98));
+            border-radius: 22px;
+            padding: 2.6rem;
+            border: 1px solid rgba(229,217,165,0.46);
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.2rem 1rem;
+            color: rgba(229,217,165,0.65);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo-lockup">
+            <div class="logo-mark"><span>N</span></div>
+            <div class="logo-text">
+                <div class="logo-text-title">NightCap Vapor</div>
+                <div class="logo-text-sub">Art Deco Vape Vending</div>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#value">Benefits</a>
+            <a href="#how">How It Works</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <a href="#cta" class="nav-cta">Book a Call</a>
+    </div>
+</header>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero reveal">
+        <div class="hero-copy">
+            <div class="hero-highlight"><span></span> High-margin revenue in a 3×3 ft footprint</div>
+            <h1>Turn a spare corner into your most profitable regular.</h1>
+            <p>
+                NightCap Vapor installs a fully compliant, premium vape vending machine in just
+                <strong>3×3 feet</strong> of floor space. You provide the corner — we handle the rest.
+            </p>
+
+            <a href="#cta" class="nav-cta" style="margin-top:1rem;">Request a Placement →</a>
+        </div>
+
+        <div class="hero-machine">
+            <div class="machine-shell deco-frame">
+                <div class="machine-inner">
+                    <div class="machine-screen">
+                        Curated, Texas-legal vape products displayed on a modern touchscreen.
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <div class="btn-push">Dispense</div>
+                        <div class="btn-reader">Tap / Swipe</div>
+                    </div>
+                    <div class="machine-brand" style="text-align:center; margin-top:0.5rem;">
+                        NightCap Vapor
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUE -->
+    <section id="value" class="reveal">
+        <h2>Big returns, tiny footprint.</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Zero staff involvement</h3>
+                <p>No one behind the bar has to card, stock, or ring up sales.</p>
+            </div>
+
+            <div class="card">
+                <h3>Highest profit per sq ft</h3>
+                <p>Turn a forgotten corner into pure incremental revenue.</p>
+            </div>
+
+            <div class="card">
+                <h3>No up-front investment</h3>
+                <p>We provide the hardware, service, inventory, and compliance.</p>
+            </div>
+
+            <div class="card">
+                <h3>Designed for your atmosphere</h3>
+                <p>Deep green, soft gold, and Art Deco lines complement any bar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="reveal">
+        <h2>We install it. You cash the checks.</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3>1. Pick a corner</h3>
+                <p>We help you choose the ideal 3×3 ft space.</p>
+            </div>
+
+            <div class="card">
+                <h3>2. Install & configure</h3>
+                <p>We deliver, set up payments, and ensure compliance.</p>
+            </div>
+
+            <div class="card">
+                <h3>3. Stock & payout</h3>
+                <p>We maintain everything. You receive monthly passive income.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="reveal">
+        <h2>Common questions</h2>
+
+        <div class="faq">
+            <div class="faq-item">
+                <div class="faq-question"><span>How much space do you need?</span><span>+</span></div>
+                <div class="faq-answer"><div>A 3×3 ft footprint — about a small high-top table.</div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question"><span>What profit can we expect?</span><span>+</span></div>
+                <div class="faq-answer"><div>Meaningful incremental revenue from space that earns nothing now.</div></div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question"><span>Do we handle compliance?</span><span>+</span></div>
+                <div class="faq-answer"><div>No. We handle permits, age gating, and regulations.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="reveal">
+        <div class="cta-inner deco-frame">
+            <h2>Let’s walk your floor plan</h2>
+            <p>Send us a quick photo or layout sketch. We’ll show you ideal placement options.</p>
+            <a class="nav-cta" href="mailto:partnerships@nightcapvapor.com">Email floor plan →</a>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    NightCap Vapor © 2025 — Premium Vape Vending for Texas Bars
+</footer>
+
+<script>
+    // FAQ toggles
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-question').addEventListener('click', () => {
+            const open = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!open) item.classList.add('open');
+        });
+    });
+</script>
+
+</body>
+</html>
